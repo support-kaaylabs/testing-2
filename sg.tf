@@ -12,26 +12,7 @@ module "sg_rule1" {
         sg_to_port           = 80
         sg_protocoltype      = "tcp"
         sg_cidr_block        = ["0.0.0.0/0"] 
-        sg_group_id          = "${module.sg.security_groups}"
-}
-
-module "sg_rule2" {
-        source               = "./modules/SG_RULE"
-        sg_ruletype          = "ingress"
-        sg_from_port         = 80
-        sg_to_port           = 80
-        sg_protocoltype      = "tcp"
-        sg_cidr_block        = ["::/0"] 
-        sg_group_id          = "${module.sg.security_groups}"
-}
-
-module "sg_rule3" {
-        source               = "./modules/SG_RULE"
-        sg_ruletype          = "ingress"
-        sg_from_port         = 443
-        sg_to_port           = 443
-        sg_protocoltype      = "tcp"
-        sg_cidr_block        = ["0.0.0.0/0"] 
+        sg_ipv6_cidr_block   = ["::/0"]
         sg_group_id          = "${module.sg.security_groups}"
 }
 
