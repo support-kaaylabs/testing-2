@@ -34,6 +34,6 @@ module "sg_rule3" {
         sg_to_port           = 0
         sg_protocoltype      = "-1"
         sg_cidr_block        = ["0.0.0.0/0"]
-        sg_ipv6_cidr_block   = ["0"]
+        sg_ipv6_cidr_block   = ["::/0"]
         sg_group_id          = "${module.sg.security_groups}"
 }
