@@ -4,8 +4,10 @@ jobs:
   tflint:
     name: runner / tflint
     runs-on: ubuntu-latest
-    uses: reviewdog/action-tflint@master
-    with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review # Optional. Change reporter
-          fail_on_error: "true"
+    steps:
+    - name: tflint
+      uses: reviewdog/action-tflint@master
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review # Optional. Change reporter
+        fail_on_error: "true"
