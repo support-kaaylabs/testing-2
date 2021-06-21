@@ -11,7 +11,7 @@ module "sg1_rule1" {
         sg_from_port         = 0
         sg_to_port           = 0
         sg_protocoltype      = "-1"
-        sg_cidr_blocks       = ["self"] 
+        sg_cidr_block        = ["self"] 
         sg_group_id          = "${module.sg1.security_groups}"
 }
 
@@ -21,7 +21,7 @@ module "sg1_rule2" {
         sg_from_port         = 0
         sg_to_port           = 0
         sg_protocoltype      = "-1"
-        sg_cidr_blocks       = ["${module.sg.security_groups}"] 
+        sg_cidr_block        = ["${module.sg.security_groups}"] 
         sg_group_id          = "${module.sg1.security_groups}"
 }
 
@@ -31,6 +31,6 @@ module "sg1_rule3" {
         sg_from_port         = 0
         sg_to_port           = 0
         sg_protocoltype      = "-1"
-        sg_cidr_blocks       = ["0.0.0.0/0"]
+        sg_cidr_block        = ["0.0.0.0/0"]
         sg_group_id          = "${module.sg1.security_groups}"
 }
