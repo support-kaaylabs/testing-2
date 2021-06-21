@@ -4,11 +4,9 @@ jobs:
   tflint:
     name: runner / tflint
     runs-on: ubuntu-latest
-      - name: tflint
-        uses: reviewdog/action-tflint@master
-        with:
+    uses: reviewdog/action-tflint@master
+    with:
           github_token: ${{ secrets.github_token }}
           working_directory: "testdata" # Optional. Change working directory
           reporter: github-pr-review # Optional. Change reporter
           fail_on_error: "true" #
-          
