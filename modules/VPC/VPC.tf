@@ -55,6 +55,10 @@ resource "aws_internet_gateway" "zupain" {
 
 resource "aws_eip" "zupain" {
   vpc      = true
+
+  tags = {
+    Name = "${var.eip_name}"
+  }
 }
 
 #Create NAT Gateway
