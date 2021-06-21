@@ -12,7 +12,7 @@ resource "aws_vpc" "zupain" {
 
 #Create Subnet
 
-resource "aws_subnet" "zupain_pub" {
+resource "aws_subnet" "zupain_public" {
   count      = "${length(data.aws_availability_zones.azs.names)}"
   availability_zone = "${element(data.aws_availability_zones.azs.names,count.index)}"
   vpc_id     = "${var.vpc_id}"
@@ -23,7 +23,7 @@ resource "aws_subnet" "zupain_pub" {
   }
 }
 
-resource "aws_subnet" "zupain_pri" {
+resource "aws_subnet" "zupain_private" {
   count      = "${length(data.aws_availability_zones.azs.names)}"
   availability_zone = "${element(data.aws_availability_zones.azs.names,count.index)}"
   vpc_id     = "${var.vpc_id}"
@@ -37,8 +37,8 @@ resource "aws_subnet" "zupain_pri" {
 #Creating RDS DB aws_db_subnet_group
 
 resource "aws_db_subnet_group" "zupain" {
-  name       = "zupain"
-  subnet_ids = "${aws_subnet.zupain_pri.*.id}"
+  name       = "${var.db_subnet_name}"
+  subnet_ids = "${aws_subnet.zupain_private.*.id}"
 }
 
 #Create aws_internet_gateway
@@ -61,7 +61,7 @@ resource "aws_eip" "zupain" {
 
 resource "aws_nat_gateway" "zupain" {
   allocation_id = aws_eip.zupain.id
-  subnet_id     = "${aws_subnet.zupain_pub[0].id}"
+  subnet_id     = "${aws_subnet.zupain_public[0].id}"
 
   tags = {
     Name = "${var.natname}"
@@ -70,7 +70,7 @@ resource "aws_nat_gateway" "zupain" {
 
 #Create public Route Table
 
-resource "aws_route_table" "zupain_pub" {
+resource "aws_route_table" "zupain_public" {
     
   vpc_id = "${var.vpc_id}"
 
@@ -85,7 +85,7 @@ resource "aws_route_table" "zupain_pub" {
 
 #Create private Route Table
 
-resource "aws_route_table" "zupain_pri" {
+resource "aws_route_table" "zupain_private" {
     
   vpc_id = "${var.vpc_id}"
 
@@ -100,20 +100,20 @@ resource "aws_route_table" "zupain_pri" {
 
 #subet assoiciation with public route Table
 
-resource "aws_route_table_association" "zupain_pub" {
+resource "aws_route_table_association" "zupain_public" {
 
-  count          = "${length(aws_subnet.zupain_pub.*.id)}"
-  subnet_id      = "${element(aws_subnet.zupain_pub.*.id, count.index)}"
-  route_table_id =  aws_route_table.zupain_pub.id
+  count          = "${length(aws_subnet.zupain_public.*.id)}"
+  subnet_id      = "${element(aws_subnet.zupain_public.*.id, count.index)}"
+  route_table_id =  aws_route_table.zupain_public.id
 }
 
 #subet assoiciation with private route Table
 
-resource "aws_route_table_association" "zupain_pri" {
+resource "aws_route_table_association" "zupain_private" {
 
-  count          = "${length(aws_subnet.zupain_pri.*.id)}"
-  subnet_id      = "${element(aws_subnet.zupain_pri.*.id, count.index)}"
-  route_table_id =  aws_route_table.zupain_pri.id
+  count          = "${length(aws_subnet.zupain_private.*.id)}"
+  subnet_id      = "${element(aws_subnet.zupain_private.*.id, count.index)}"
+  route_table_id =  aws_route_table.zupain_private.id
 }
 
 output "vpc_id" {
@@ -121,21 +121,21 @@ output "vpc_id" {
 }
 
 output "subnet_id" {
-  value = "${aws_subnet.zupain_pub.*.id}"
+  value = "${aws_subnet.zupain_public.*.id}"
 }
 
 output "subnet_id2" {
-  value = "${aws_subnet.zupain_pub[0].id}"
+  value = "${aws_subnet.zupain_public[0].id}"
 }  
 
 output "subnet_id3" {
-  value = "${aws_subnet.zupain_pub[1].id}"
+  value = "${aws_subnet.zupain_public[1].id}"
 }
 
 output "subnet_id_pri" {
-  value = "${aws_subnet.zupain_pri.*.id}"
+  value = "${aws_subnet.zupain_private.*.id}"
 }
 
 output "db_subnet_group" {
-  value = "${aws_db_subnet_group.terraform.id}"
+  value = "${aws_db_subnet_group.zupain.id}"
 }

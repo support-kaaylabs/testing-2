@@ -25,4 +25,4 @@ variable "igt_name" {}
 variable "natname" {}
 variable "pubroutetable_name" {}
 variable "priroutetable_name" {}
-
+variable "db_subnet_name" {}
