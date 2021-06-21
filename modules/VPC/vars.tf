@@ -18,3 +18,11 @@ variable "subnet_cidr_pri" {
 
 data "aws_availability_zones" "azs" {}
 
+variable "vpc_tagname" {}
+variable "pub_subname" {}
+variable "pri_subname" {}
+variable "igt_name" {}
+variable "natname" {}
+variable "pubroutetable_name" {}
+variable "priroutetable_name" {}
+

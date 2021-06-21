@@ -1,7 +1,7 @@
-# terraform {
-#   backend "s3" {
-#     bucket = "terraform-s"
-#     key    = "terraform.tfstate"
-#     region = "ap-south-1"
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket = "terraform-zupain"
+    key    = "terraform.tfstate"
+    region = "ap-south-1"
+  }
+}

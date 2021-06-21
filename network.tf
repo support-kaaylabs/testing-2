@@ -1,8 +1,15 @@
 
 module "vpc" {
-        source          = "./modules/VPC"
-        vpc_cidr        = "172.0.0.0/16"
-        vpc_id          = "${module.vpc.vpc_id}"
-        subnet_cidr_pub = ["172.0.1.0/24","172.0.2.0/24","172.0.3.0/24"]
-        subnet_cidr_pri = ["172.0.4.0/24","172.0.5.0/24","172.0.6.0/24"]
+        source             = "./modules/VPC"
+        vpc_tagname        = "zupain"
+        pub_subname        = "zupain-pub"
+        pri_subname        = "zupain-pri"
+        igt_name           = "zupain"
+        natname            = "zupain"
+        pubroutetable_name = "zupain-pub"
+        priroutetable_name = "zupain-pri"
+        vpc_cidr           = "172.0.0.0/16"
+        vpc_id             = "${module.vpc.vpc_id}"
+        subnet_cidr_pub    = ["172.0.8.0/20","172.0.16.0/20","172.0.32.0/20"]
+        subnet_cidr_pri    = ["172.0.64.0/20","172.0.128.0/20","172.0.255.0/20"]
 }

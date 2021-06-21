@@ -6,7 +6,7 @@ resource "aws_vpc" "zupain" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "zupain"
+    Name = "${var.vpc_tagname}"
   }
 }
 
@@ -19,7 +19,7 @@ resource "aws_subnet" "zupain_pub" {
   cidr_block = "${element(var.subnet_cidr_pub,count.index)}"
 
   tags = {
-    Name = "zupain-pub-${count.index+1}"
+    Name = "${var.pub_subname}-${count.index+1}"
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_subnet" "zupain_pri" {
   cidr_block = "${element(var.subnet_cidr_pri,count.index)}"
 
   tags = {
-    Name = "zupain-pri-${count.index+1}"
+    Name = "${var.pri_subname}-${count.index+1}"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_internet_gateway" "zupain" {
   vpc_id = "${var.vpc_id}"
 
   tags = {
-    Name = "zupain"
+    Name = "${var.igt_name}"
   }
 }
 
@@ -64,7 +64,7 @@ resource "aws_nat_gateway" "zupain" {
   subnet_id     = "${aws_subnet.zupain_pub[0].id}"
 
   tags = {
-    Name = "zupain"
+    Name = "${var.natname}"
   }
 }
 
@@ -79,7 +79,7 @@ resource "aws_route_table" "zupain_pub" {
     gateway_id = aws_internet_gateway.zupain.id
   }
   tags = {
-    Name = "zupain-pub"
+    Name = "${var.pubroutetable_name}"
   }
 }
 
@@ -94,7 +94,7 @@ resource "aws_route_table" "zupain_pri" {
     nat_gateway_id= aws_nat_gateway.zupain.id
   }
   tags = {
-    Name = "zupain-pri"
+    Name = "${var.priroutetable_name}"
   }
 }
 
