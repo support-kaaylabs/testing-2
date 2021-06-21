@@ -11,7 +11,7 @@ module "sg1_rule1" {
         sg_from_port         = 0
         sg_to_port           = 0
         sg_protocoltype      = "-1"
-        sg_cidr_block        = ["self"] 
+        sg_cidr_block        = ["${module.sg1.security_groups}"] 
         sg_group_id          = "${module.sg1.security_groups}"
 }
 
