@@ -5,8 +5,6 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - sudo systemctl start docker
-      - sudo systemctl status docker
       - aws ecr get-login-password | docker login --username AWS --password-stdin 454552690810.dkr.ecr.us-east-1.amazonaws.com/sample
       - REPOSITORY_URI=454552690810.dkr.ecr.us-east-1.amazonaws.com/sample
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
